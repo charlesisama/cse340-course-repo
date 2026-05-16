@@ -108,3 +108,49 @@ VALUES
  'Career mentorship for secondary school students.',
  'Enugu',
  '2026-05-28');
+
+
+-- SERVICE PROJECT CATEGORIES
+
+
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Junction table for many-to-many relationship
+CREATE TABLE project_categories (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES service_projects(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+        ON DELETE CASCADE
+);
+
+
+-- INSERT CATEGORY DATA
+
+
+INSERT INTO categories (name)
+VALUES
+('Environmental'),
+('Education'),
+('Health');
+
+-- ASSOCIATE PROJECTS WITH CATEGORIES
+
+
+INSERT INTO project_categories (project_id, category_id)
+VALUES
+(1, 1), -- Food Relief Drive -> Environmental
+(2, 3), -- Medical Outreach -> Health
+(3, 2); -- School Supply Donation -> Education
