@@ -37,5 +37,7 @@ const getProjectsByOrganizationId = async (organizationId) => {
     return result.rows;
 };
 
+
+
 // Export the model functions
 export { getAllProjects, getProjectsByOrganizationId };
