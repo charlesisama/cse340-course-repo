@@ -1,7 +1,4 @@
-import {
-    getAllOrganizations,
-    getOrganizationDetails
-} from '../models/organizations.js';
+import { getAllOrganizations, getOrganizationDetails } from '../models/organizations.js';
 
 import {getProjectsByOrganizationId } from '../models/projects.js';
 
