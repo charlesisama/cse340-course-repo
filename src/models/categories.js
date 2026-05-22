@@ -2,7 +2,7 @@
 
 import db from './db.js';
 
-export async function getAllCategories() {
+ async function getAllCategories() {
 
     const sql = `
         SELECT *
@@ -13,4 +13,71 @@ export async function getAllCategories() {
     const result = await db.query(sql);
 
     return result.rows;
-}
+};
+
+const getCategoryDetails = async (id) => {
+
+    const query = `
+        SELECT
+            category_id,
+            name
+        FROM categories
+        WHERE category_id = $1;
+    `;
+
+    const queryParams = [id];
+
+    const result = await db.query(query, queryParams);
+
+    return result.rows[0];
+};
+
+const getCategoriesByProjectId = async (projectId) => {
+
+    const query = `
+        SELECT
+            categories.category_id,
+            categories.name
+        FROM categories
+        JOIN project_categories
+            ON categories.category_id =
+                project_categories.category_id
+        WHERE project_categories.project_id = $1;
+    `;
+
+    const queryParams = [projectId];
+
+    const result = await db.query(query, queryParams);
+
+    return result.rows;
+};
+
+const getProjectsByCategoryId = async (categoryId) => {
+
+    const query = `
+        SELECT
+            service_projects.project_id,
+            service_projects.title,
+            service_projects.project_date,
+            service_projects.location
+        FROM service_projects
+        JOIN project_categories
+            ON service_projects.project_id =
+                project_categories.project_id
+        WHERE project_categories.category_id = $1
+        ORDER BY service_projects.project_date;
+    `;
+
+    const queryParams = [categoryId];
+
+    const result = await db.query(query, queryParams);
+
+    return result.rows;
+};
+
+export {
+    getAllCategories,
+    getCategoryDetails,
+    getCategoriesByProjectId,
+    getProjectsByCategoryId
+};
