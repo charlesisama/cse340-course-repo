@@ -5,6 +5,9 @@
         </h1>
 
         <p>Here are a few of our partner organizations:</p>
+
+        <p class="add-org"><a href="/new-organization">Add a new organization</a></p>
+        
         <ul>
             <% organizations.forEach(organization=> { %>
                 <li><img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo"><a
@@ -15,7 +18,7 @@
                 <% }); %>
         </ul>
 
-        <p><a href="/new-organization">Add a new organization</a></p>
+        
     </main>
 
     <%- include('partials/footer') %>

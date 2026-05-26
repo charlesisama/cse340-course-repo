@@ -4,6 +4,8 @@
             <%= title %>
         </h1>
 
+        <p class="edit-org"><a href="/edit-organization/<%= organizationDetails.organization_id %>">Edit Organization</a></p>
+
         <h2>
             <%= organizationDetails.name %>
         </h2>
@@ -20,5 +22,5 @@
                     </a></li>
                 <% }) %>
         </ul>
-    </main>
+        </main>
     <%- include('partials/footer') %>
