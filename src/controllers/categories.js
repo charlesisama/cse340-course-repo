@@ -66,33 +66,22 @@ const categoryValidation = [
     body('name')
         .trim()
         .notEmpty()
-        .withMessage(
-            'Category name is required.'
-        )
-        .isLength({
-            min: 3,
-            max: 100
-        })
-        .withMessage(
-            'Category name must be between 3 and 100 characters.'
-        )
+        .withMessage('Category name is required.')
+        .isLength({min: 3, max: 100})
+        .withMessage('Category name must be between 3 and 100 characters.')
 ];
 
 // Function to create a new category
 const showNewCategoryForm =
     async (req, res) => {
 
-        const title =
-            'Create New Category';
+        const title = 'Create New Category';
 
-        res.render(
-            'new-category',
+        res.render('new-category',
             {
                 title,
                 name: '',
-                errors: []
-            }
-        );
+                errors: [] });
     };
 
 
@@ -100,8 +89,7 @@ const showNewCategoryForm =
 const processNewCategoryForm =
     async (req, res) => {
 
-        const errors =
-            validationResult(req);
+        const errors =validationResult(req);
 
         const { name } = req.body;
 
@@ -112,10 +100,7 @@ const processNewCategoryForm =
 
         await createCategory(name);
 
-        req.flash(
-            'success',
-            'Category created successfully.'
-        );
+        req.flash('success', 'Category created successfully.');
 
         res.redirect('/categories');
     };
@@ -127,13 +112,9 @@ const showEditCategoryForm =
         const categoryId =
             req.params.id;
 
-        const category =
-            await getCategoryDetails(
-                categoryId
-            );
+        const category = await getCategoryDetails(categoryId);
 
-        const title =
-            'Edit Category';
+        const title = 'Edit Category';
 
         res.render(
             'edit-category',
@@ -148,36 +129,20 @@ const showEditCategoryForm =
 const processEditCategoryForm =
     async (req, res) => {
 
-        const categoryId =
-            req.params.id;
+        const categoryId = req.params.id;
 
-        const errors =
-            validationResult(req);
+        const title = 'Edit Category';
+
+        const errors = validationResult(req);
 
         const { name } = req.body;
 
         if (!errors.isEmpty()) {
 
-            return res.render(
-                'edit-category',
-                {
-                    title:
-                        'Edit Category',
-                    errors:
-                        errors.array(),
-                    category: {
-                        category_id:
-                            categoryId,
-                        name
-                    }
-                }
-            );
+            return res.render('edit-category', {title, errors: errors.array(), category: {category_id: categoryId, name}});
         }
 
-        await updateCategory(
-            categoryId,
-            name
-        );
+        await updateCategory(categoryId, name);
 
         req.flash(
             'success',

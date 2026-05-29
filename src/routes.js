@@ -60,29 +60,15 @@ router.get('/edit-project/:id',showEditProjectForm);
 router.post('/edit-project/:id', validationResult, processEditProjectForm);
 
 // New category routes
-router.get(
-    '/new-category',
-    showNewCategoryForm
-);
+router.get('/new-category', showNewCategoryForm);
 
-router.post(
-    '/new-category',
-    categoryValidation,
-    processNewCategoryForm
-);
+router.post('/new-category', categoryValidation, processNewCategoryForm);
 
 
 // Edit category routes
-router.get(
-    '/edit-category/:id',
-    showEditCategoryForm
-);
+router.get('/edit-category/:id', showEditCategoryForm);
 
-router.post(
-    '/edit-category/:id',
-    categoryValidation,
-    processEditCategoryForm
-);
+router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
