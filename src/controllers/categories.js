@@ -1,7 +1,8 @@
-import { getAllCategories, getCategoryDetails, getCategoriesByProjectId } from '../models/categories.js';
+import { getAllCategories, getCategoryDetails, getCategoriesByProjectId, createCategory, updateCategory } from '../models/categories.js';
 import { getProjectsByCategoryId, assignCategoryToProject, updateCategoryAssignments } from '../models/categories.js';
 import { getProjectDetails } from '../models/projects.js';
-
+import { body, validationResult }
+    from 'express-validator';
 
 // Define any controller functions
 const showCategoriesPage = async (req, res) => {
@@ -59,5 +60,139 @@ const processAssignCategoriesForm = async (req, res) => {
     res.redirect(`/project/${projectId}`);
 };
 
+
+const categoryValidation = [
+
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage(
+            'Category name is required.'
+        )
+        .isLength({
+            min: 3,
+            max: 100
+        })
+        .withMessage(
+            'Category name must be between 3 and 100 characters.'
+        )
+];
+
+// Function to create a new category
+const showNewCategoryForm =
+    async (req, res) => {
+
+        const title =
+            'Create New Category';
+
+        res.render(
+            'new-category',
+            {
+                title,
+                name: '',
+                errors: []
+            }
+        );
+    };
+
+
+// Function to process the form submission for creating a new category
+const processNewCategoryForm =
+    async (req, res) => {
+
+        const errors =
+            validationResult(req);
+
+        const { name } = req.body;
+
+        if (!errors.isEmpty()) {
+
+            return res.render('new-category', {title:'Create New Category', errors:errors.array(), name});
+        }
+
+        await createCategory(name);
+
+        req.flash(
+            'success',
+            'Category created successfully.'
+        );
+
+        res.redirect('/categories');
+    };
+
+    // Function to show the form for editing a category
+const showEditCategoryForm =
+    async (req, res) => {
+
+        const categoryId =
+            req.params.id;
+
+        const category =
+            await getCategoryDetails(
+                categoryId
+            );
+
+        const title =
+            'Edit Category';
+
+        res.render(
+            'edit-category',
+            {
+                title,
+                category
+            }
+        );
+    };
+
+    // Function to process the form submission for editing a category
+const processEditCategoryForm =
+    async (req, res) => {
+
+        const categoryId =
+            req.params.id;
+
+        const errors =
+            validationResult(req);
+
+        const { name } = req.body;
+
+        if (!errors.isEmpty()) {
+
+            return res.render(
+                'edit-category',
+                {
+                    title:
+                        'Edit Category',
+                    errors:
+                        errors.array(),
+                    category: {
+                        category_id:
+                            categoryId,
+                        name
+                    }
+                }
+            );
+        }
+
+        await updateCategory(
+            categoryId,
+            name
+        );
+
+        req.flash(
+            'success',
+            'Category updated successfully.'
+        );
+
+        res.redirect(
+            `/category/${categoryId}`
+        );
+    };
+
 // Export any controller functions
-export { showCategoriesPage, showCategoryDetailsPage, showAssignCategoriesForm, processAssignCategoriesForm };
+export {
+    showCategoriesPage, showCategoryDetailsPage,
+    showAssignCategoriesForm, processAssignCategoriesForm, 
+    categoryValidation, showNewCategoryForm, createCategory, updateCategory,
+    showEditCategoryForm, processEditCategoryForm, processNewCategoryForm
+};

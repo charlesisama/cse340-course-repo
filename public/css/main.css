@@ -130,7 +130,20 @@ ul {
 .add-org,
 .edit-org,
 .new-project,
+.edit-project,
+.assign-category,
 .action-btn,
+.edit-category,
+.new-category {
+    display: inline-block;
+    padding: 0.8rem 1.3rem;
+    background-color: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
 main a.button-link {
     display: inline-block;
     padding: 0.8rem 1.3rem;
@@ -146,7 +159,11 @@ main a.button-link {
 .add-org:hover,
 .edit-org:hover,
 .new-project:hover,
+.edit-project:hover,
+.assign-category:hover,
 .action-btn:hover,
+.new-category:hover,
+.edit-category:hover,
 main a.button-link:hover {
     background-color: var(--secondary);
     transform: translateY(-2px);
@@ -339,9 +356,9 @@ footer {
 
 .card {
     background: #fff;
+    border-top: 4px solid var(--accent);
     border-radius: 18px;
     padding: 1.5rem;
-    border: 1px solid #e7edf3;
     box-shadow:
         0 6px 18px rgba(0, 0, 0, 0.06);
     transition:

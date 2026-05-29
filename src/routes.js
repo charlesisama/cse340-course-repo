@@ -12,8 +12,11 @@ import {
     projectValidation, showEditProjectForm, processEditProjectForm
 } from './controllers/projects.js';
     
-import { showCategoriesPage, showCategoryDetailsPage, showAssignCategoriesForm, processAssignCategoriesForm }
-    from './controllers/categories.js';
+import {
+    showCategoriesPage, showCategoryDetailsPage, showAssignCategoriesForm,
+    processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm, processNewCategoryForm,
+    categoryValidation, showNewCategoryForm, createCategory, updateCategory
+}from './controllers/categories.js';
 
 import { testErrorPage } from './controllers/errors.js';
 import { validationResult } from 'express-validator';
@@ -55,6 +58,31 @@ router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 router.get('/edit-project/:id',showEditProjectForm);
 
 router.post('/edit-project/:id', validationResult, processEditProjectForm);
+
+// New category routes
+router.get(
+    '/new-category',
+    showNewCategoryForm
+);
+
+router.post(
+    '/new-category',
+    categoryValidation,
+    processNewCategoryForm
+);
+
+
+// Edit category routes
+router.get(
+    '/edit-category/:id',
+    showEditCategoryForm
+);
+
+router.post(
+    '/edit-category/:id',
+    categoryValidation,
+    processEditCategoryForm
+);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
