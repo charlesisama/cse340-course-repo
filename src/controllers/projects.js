@@ -18,10 +18,10 @@ const projectValidation = [
         .trim()
         .notEmpty().withMessage('Location is required')
         .isLength({ max: 200 }).withMessage('Location must be less than 200 characters'),
-    body('date')
+    body('project_date')
         .notEmpty().withMessage('Date is required')
         .isISO8601().withMessage('Date must be a valid date format'),
-    body('organizationId')
+    body('organization_id')
         .notEmpty().withMessage('Organization is required')
         .isInt().withMessage('Organization must be a valid integer')
 ];
@@ -71,8 +71,21 @@ const showNewProjectForm = async (req, res) => {
 }
 
 const processNewProjectForm = async (req, res) => {
+   
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Loop through validation errors and flash them
+        errors.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        // Redirect back to the new project form
+        return res.redirect('/new-project');
+    }
+   
     // Extract form data from req.body
-    const { title, description, location, date, organizationId } = req.body;
+    const { title, description, location, project_date, organization_id } = req.body;
 
     try {
         // Create the new project in the database
@@ -86,17 +99,7 @@ const processNewProjectForm = async (req, res) => {
         res.redirect('/new-project');
     }
 
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        // Loop through validation errors and flash them
-        errors.array().forEach((error) => {
-            req.flash('error', error.msg);
-        });
-
-        // Redirect back to the new project form
-        return res.redirect('/new-project');
-    }
+   
 };
 
 // Show edit project form

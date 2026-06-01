@@ -57,7 +57,7 @@ router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 // Edit project routes
 router.get('/edit-project/:id',showEditProjectForm);
 
-router.post('/edit-project/:id', validationResult, processEditProjectForm);
+router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 
 // New category routes
 router.get('/new-category', showNewCategoryForm);
