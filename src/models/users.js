@@ -1,3 +1,6 @@
+import db from './db.js';
+
+
 const createUser = async (name, email, passwordHash) => {
     const default_role = 'user';
     const query = `
