@@ -4,10 +4,15 @@
 
     <h1><%= project.title %></h1>
 
-    <p class="assign-category"><a href="/assign-categories/<%= project.project_id %>">Assign Project Category</a></p>
+    <% if (user && user.role_name==='admin' ) { %>
+        <a class="assign-category" href="/assign-categories/<%= project.project_id %>">Assign Project Category</a>
+        <% } %>
 
-    <p class="edit-project"><a href="/edit-project/<%= project.project_id %>">Edit Project</a></p>
     
+    <% if (user && user.role_name==='admin' ) { %>
+        <a class="edit-project" href="/edit-project/<%= project.project_id %>">Edit Project</a>
+        <% } %>
+
     <p>
         <strong>Description:</strong>
         <%= project.description %>

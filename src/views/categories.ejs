@@ -6,7 +6,10 @@
             <%= title %>
         </h1>
         
-        <p class="new-category"><a href="/new-category">Create New Category</a></p>
+
+        <% if (user && user.role_name==='admin' ) { %>
+            <a class="new-category" href="/new-category">Create New Category</a>
+            <% } %>
 
         
 

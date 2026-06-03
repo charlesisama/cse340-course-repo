@@ -134,7 +134,8 @@ ul {
 .assign-category,
 .action-btn,
 .edit-category,
-.new-category {
+.new-category,
+.dashboard {
     display: inline-block;
     padding: 0.8rem 1.3rem;
     background-color: var(--accent);
@@ -164,6 +165,10 @@ main a.button-link {
 .action-btn:hover,
 .new-category:hover,
 .edit-category:hover,
+.dashboard:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+}
 main a.button-link:hover {
     background-color: var(--secondary);
     transform: translateY(-2px);
