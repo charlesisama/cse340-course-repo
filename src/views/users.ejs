@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+
+    <main class="users-page">
+
+    
+        <section class="users-header">
+            <h1>
+                <%= title %>
+            </h1>
+            <p>
+                View all registered users and their assigned roles.
+            </p>
+        </section>
+
+        <section class="users-table-container">
+
+            <table class="users-table">
+
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% users.forEach(user=> { %>
+
+                        <tr>
+                            <td>
+                                <%= user.user_id %>
+                            </td>
+                            <td>
+                                <%= user.name %>
+                            </td>
+                            <td>
+                                <%= user.email %>
+                            </td>
+                            <td>
+                                <span class="role-badge <%= user.role_name %>">
+                                    <%= user.role_name %>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </section>
+    
+
+    </main>
+
+    <%- include('partials/footer') %>

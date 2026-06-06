@@ -23,7 +23,7 @@ import { validationResult } from 'express-validator';
 
 import {
     showUserRegistrationForm, processUserRegistrationForm, showLoginForm,
-    processLoginForm, processLogout, requireLogin, showDashboard, requireRole
+    processLoginForm, processLogout, requireLogin, showDashboard, requireRole, showUsersPage
 }
     from './controllers/users.js';
 
@@ -88,6 +88,10 @@ router.get('/logout', processLogout);
 
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+
+
+// Admin-only users page
+router.get('/users', requireLogin, requireRole('admin'), showUsersPage);
 
 
 // error-handling routes

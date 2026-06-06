@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser, authenticateUser } from '../models/users.js';
+import { createUser, authenticateUser, getAllUsers } from '../models/users.js';
 
 
 const showUserRegistrationForm = (req, res) => {
@@ -77,15 +77,18 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
+
 const showDashboard = (req, res) => {
+
     const user = req.session.user;
+
     res.render('dashboard', {
         title: 'Dashboard',
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role_name
     });
 };
-
 
 /**
  * Middleware factory to require specific role for route access
@@ -113,9 +116,22 @@ const requireRole = (role) => {
     };
 };
 
+
+const showUsersPage = async (req, res) => {
+
+    const users = await getAllUsers();
+
+    res.render('users', {
+        title: 'Registered Users',
+        users
+    });
+
+};
+
+
 export {
     showUserRegistrationForm, processUserRegistrationForm, showLoginForm,
     processLoginForm, processLogout, requireLogin, showDashboard,
-    requireRole
+    requireRole, showUsersPage
 };
 
