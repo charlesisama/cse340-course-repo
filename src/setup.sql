@@ -340,5 +340,26 @@ CREATE TABLE users (
 );
 
 
+-- ==========================================
+-- PROJECT VOLUNTEERS
+-- MANY TO MANY
+-- ==========================================
+
+CREATE TABLE project_volunteers (
+    user_id INTEGER NOT NULL,
+    project_id INTEGER NOT NULL,
+
+    PRIMARY KEY (user_id, project_id),
+
+    CONSTRAINT fk_volunteer_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_volunteer_project
+        FOREIGN KEY (project_id)
+        REFERENCES service_projects(project_id)
+        ON DELETE CASCADE
+);
 
 

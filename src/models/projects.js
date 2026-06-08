@@ -143,10 +143,76 @@ const updateProject = async (
     return result.rows[0].project_id;
 };
 
+// Add a volunteer to a project
+const addVolunteer = async (userId, projectId) => {
+    const sql = `
+        INSERT INTO project_volunteers
+        (user_id, project_id)
+        VALUES ($1, $2)
+        ON CONFLICT DO NOTHING
+        RETURNING *
+    `
+    const queryParams = [userId, projectId];
+    const result = await db.query(sql, queryParams);
+    return result.rows[0];
+};
+
+
+// Remove a volunteer from a project
+const removeVolunteer = async (userId, projectId) => {
+    const sql = `
+        DELETE FROM project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2
+    `
+
+    const queryParams = [userId, projectId];
+    const result = await db.query(sql, queryParams);
+
+    return result.rows[0];
+};
+
+// Check if a user is a volunteer for a project
+const isVolunteer = async (userId, projectId) => {
+    const sql = `
+        SELECT *
+        FROM project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2
+    `
+
+    const result = await db.query(sql, [userId, projectId])
+
+    return result.rows.length > 0
+};
+
+// Get all projects a user is volunteering for
+const getVolunteerProjects = async (userId) => {
+    const sql = `
+        SELECT
+            sp.project_id,
+            sp.title,
+            sp.location,
+            sp.project_date
+        FROM project_volunteers pv
+        JOIN service_projects sp
+            ON pv.project_id = sp.project_id
+        WHERE pv.user_id = $1
+        ORDER BY sp.project_date
+    `
+
+    const result = await db.query(sql, [userId])
+
+    return result.rows
+}
+
+
 export {
     getUpcomingProjects,
     getProjectDetails,
     getProjectsByOrganizationId,
     createProject,
-    updateProject
+    updateProject,
+    addVolunteer, removeVolunteer,
+    isVolunteer, getVolunteerProjects
 };
