@@ -393,7 +393,7 @@ footer {
     text-decoration: none;
 }
 
-.card-btn {
+.card-btn, .btn {
     display: inline-block;
     background: #0077b6;
     color: white;
@@ -404,7 +404,7 @@ footer {
     transition: 0.3s ease;
 }
 
-.card-btn:hover {
+.card-btn:hover, .btn:hover {
     background: #005f73;
 }
 
