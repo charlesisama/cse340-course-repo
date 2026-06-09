@@ -9,7 +9,8 @@ import { showHomePage } from './controllers/index.js';
 
 import {
     showProjectsPage, showProjectDetailsPage, processNewProjectForm, showNewProjectForm,
-    projectValidation, showEditProjectForm, processEditProjectForm
+    projectValidation, showEditProjectForm, processEditProjectForm, volunteerProject, 
+    unvolunteerProject
 } from './controllers/projects.js';
     
 import {
@@ -93,6 +94,10 @@ router.get('/dashboard', requireLogin, showDashboard);
 // Admin-only users page
 router.get('/users', requireLogin, requireRole('admin'), showUsersPage);
 
+
+router.get("/project/:id/volunteer", requireLogin, volunteerProject)
+
+router.get("/project/:id/remove-volunteer", requireLogin, unvolunteerProject)
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

@@ -36,6 +36,30 @@
         </a>
     </p>
 
+
+    <!-- //voluteering for a project -->
+    <% if (user) { %>
+    
+        <% if (!volunteerStatus) { %>
+    
+            <a href="/project/<%= project.project_id %>/volunteer" class="btn">
+                Volunteer for this Project
+            </a>
+    
+            <% } else { %>
+    
+                <p>
+                    You are volunteering for this project.
+                </p>
+    
+                <a href="/project/<%= project.project_id %>/remove-volunteer" class="btn btn-danger">
+                    Remove Volunteer Signup
+                </a>
+    
+                <% } %>
+    
+                    <% } %>
+
 </main>
 
 <%- include('partials/footer') %>

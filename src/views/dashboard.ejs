@@ -34,6 +34,43 @@
 
             <% } %>
 
+
+        <h2>My Volunteer Projects</h2>
+        
+        <% if (volunteerProjects.length> 0) { %>
+        
+            <ul>
+        
+                <% volunteerProjects.forEach(project=> { %>
+        
+                    <li>
+        
+                        <strong>
+                            <%= project.title %>
+                        </strong>
+        
+                        -
+                        <%= project.location %>
+        
+                            <a href="/projects/<%= project.project_id %>/remove-volunteer">
+                                Remove
+                            </a>
+        
+                    </li>
+        
+                    <% }) %>
+        
+            </ul>
+        
+            <% } else { %>
+        
+                <p>
+                    You have not volunteered for any projects yet.
+                </p>
+        
+                <% } %>
+                
+
     </main>
 
     <%- include('partials/footer') %>
